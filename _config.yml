@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Lutz Lu's Happy Blogs"
+title                    : "Lutz Lu's Happy Blog"
 title_separator          : "-"
 name                     : &name "Lutz Lu (Yunrui Lu)"
 description              : &description "Graduate Student at Dartmouth College"
