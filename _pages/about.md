@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Lutz's Happy Blogs"
+title: "Lutz's Blogs"
 excerpt: "About me"
 author_profile: true
 redirect_from: 
