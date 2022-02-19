@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Lutz Lu's Blog       "
+title                    : "Lutz Lu's Personal Website and Blogs"
 title_separator          : "-"
 name                     : &name "Lutz Lu"
 description              : &description "personal description"
