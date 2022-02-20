@@ -19,6 +19,8 @@ Education
 * Senior Thesis: Contract Effect on Employee Efficiency: Based on American Professional Basketball League
 * Wang Yanan Institute for Studies in Economics Dean's List of all semesters
 
+&nbsp;
+
 Work and Research Experience
 ======
 ### Dartmouth College, EDIT Lab
@@ -42,8 +44,8 @@ Data Scientist Intern, Jun. 2020 – Oct. 2020
 
 ### Baidu, Business-to-Business (B2B)
 Data Analysis Intern, Feb. 2020 – May 2020
-*	Participated in the process design of Baidu search for B2B related products; conducted product-related research and data analysis; completed the product scheme design and product cycle iteration in the B2B search scenario
-*	Designed selenium crawler scripts through Python, and worked with the team to overcome the anti-crawling measures using nearly 100,000 high-quality crawling data points
+* Participated in the process design of Baidu search for B2B related products; conducted product-related research and data analysis; completed the product scheme design and product cycle iteration in the B2B search scenario
+* Designed selenium crawler scripts through Python, and worked with the team to overcome the anti-crawling measures using nearly 100,000 high-quality crawling data points
 
 
 Education
