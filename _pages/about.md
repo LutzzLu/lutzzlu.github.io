@@ -12,7 +12,6 @@ redirect_from:
 &nbsp;
 
 # About me
-&nbsp;
 
 Education
 ======
