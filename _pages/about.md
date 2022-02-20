@@ -14,8 +14,8 @@ redirect_from:
 Education
 ======
 * M.S. in Health Data Science, Dartmouth College, 2023 (expected)
-* B.S. in Mathematical Economics, Xiamen University, 2021
-* B.S. in German Language, Xiamen University, 2021
+* B.A. in Mathematical Economics, Xiamen University, 2021
+* B.A. in German Language, Xiamen University, 2021
 ### Senior Thesis and Honor
 * Senior Thesis: Impact of Text Sentiment Tagging on Machine Learning Sentiment Orientation with German Particles
 * Senior Thesis: Contract Effect on Employee Efficiency: Based on NBA and Panel Regression
