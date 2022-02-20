@@ -18,7 +18,7 @@ Education
 * B.S. in German Language, Xiamen University, 2021
 ### Senior Thesis and Honor
 * Senior Thesis: Impact of Text Sentiment Tagging on Machine Learning Sentiment Orientation with German Particles
-* Senior Thesis: Contract Effect on Employee Efficiency: Based on American Professional Basketball League
+* Senior Thesis: Contract Effect on Employee Efficiency: Based on NBA and Panel Regression
 * Wang Yanan Institute for Studies in Economics Dean's List of all semesters
 
 &nbsp;
