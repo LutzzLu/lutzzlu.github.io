@@ -21,6 +21,8 @@ Education
 * Senior Thesis: Contract Effect on Employee Efficiency: Based on American Professional Basketball League
 * Wang Yanan Institute for Studies in Economics Dean's List of all semesters
 
+&nbsp;
+
 Work and Research Experience
 ======
 ### Dartmouth College, EDIT Lab
