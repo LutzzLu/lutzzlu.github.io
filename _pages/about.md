@@ -11,7 +11,7 @@ redirect_from:
 # About The Alchemist
 
 * M.S. in Health Data Science, Dartmouth College, 2023 (expected)
-* B.A. in Mathematical Economics, Xiamen University, 2021
+* B.S. in Mathematical Economics, Xiamen University, 2021
 * B.A. in German Language, Xiamen University, 2021
 ### Senior Thesis and Honor
 * Senior Thesis: Impact of Text Sentiment Tagging on Machine Learning Sentiment Orientation with German Particles
