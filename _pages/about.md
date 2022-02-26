@@ -19,3 +19,6 @@ redirect_from:
 * Wang Yanan Institute for Studies in Economics Dean's List of all semesters
 
 &nbsp;
+
+# Alkemialliset reseptit
+
