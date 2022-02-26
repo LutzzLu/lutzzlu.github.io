@@ -22,3 +22,6 @@ redirect_from:
 
 # Alkemialliset reseptit
 
+### [Fine-tuning a Huggingface Model Using Own Data](https://lutzzlu.github.io//posts/2022/02/blog-post-1/)
+
+- My first blog: how to use huggingface models.
