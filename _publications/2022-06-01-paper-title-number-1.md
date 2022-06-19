@@ -1,14 +1,12 @@
 ---
-title: "Paper Title Number 3"
+title: "Investigating the Fidelity of Digital Peer Support: A Preliminary Approach Using Natural Language Processing"
 collection: publications
-permalink: /publication/2015-10-01-paper-title-number-3
-excerpt: 'This paper is about the number 3. The number 4 is left for future work.'
-date: 2015-10-01
-venue: 'Journal 1'
-paperurl: 'http://academicpages.github.io/files/paper3.pdf'
+permalink: /publication/2022-06-01-paper-title-number-1
+excerpt: 'This paper is senior thesis'
+date: 2022-06-01
+venue: 'Dartmouth College'
+paperurl: 'http://lutzzlu.github.io/files/AryaKadakiaThesis.pdf'
 ---
-This paper is about the number 3. The number 4 is left for future work.
+This paper is senior thesis
 
-[Download paper here](http://academicpages.github.io/files/paper3.pdf)
-
-Recommended citation: Your Name, You. (2015). "Paper Title Number 3." <i>Journal 1</i>. 1(3).
+[Download paper here](http://lutzzlu.github.io/files/AryaKadakiaThesis.pdf)
