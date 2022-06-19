@@ -1,0 +1,552 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Fine-tuning a Huggingface Model Using Own Data - Lutz Lu’s Happy Blog</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en-US">
+<meta property="og:site_name" content="Lutz Lu's Happy Blog">
+<meta property="og:title" content="Fine-tuning a Huggingface Model Using Own Data">
+
+
+  <link rel="canonical" href="http://localhost:4000/posts/2022/02/blog-post-1/">
+  <meta property="og:url" content="http://localhost:4000/posts/2022/02/blog-post-1/">
+
+
+
+  <meta property="og:description" content="This is my first blog about how to use huggingface models.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2022-02-20T00:00:00-08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Lutz Lu (Yunrui Lu)",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Lutz Lu's Happy Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/images/apple-touch-icon-57x57.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/images/apple-touch-icon-60x60.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/images/apple-touch-icon-76x76.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/images/apple-touch-icon-120x120.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/images/apple-touch-icon-152x152.png?v=M44lzPylqQ">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/images/apple-touch-icon-180x180.png?v=M44lzPylqQ">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-32x32.png?v=M44lzPylqQ" sizes="32x32">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/android-chrome-192x192.png?v=M44lzPylqQ" sizes="192x192">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-96x96.png?v=M44lzPylqQ" sizes="96x96">
+<link rel="icon" type="image/png" href="http://localhost:4000/images/favicon-16x16.png?v=M44lzPylqQ" sizes="16x16">
+<link rel="manifest" href="http://localhost:4000/images/manifest.json?v=M44lzPylqQ">
+<link rel="mask-icon" href="http://localhost:4000/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
+<link rel="shortcut icon" href="/images/favicon.ico?v=M44lzPylqQ">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="http://localhost:4000/images/mstile-144x144.png?v=M44lzPylqQ">
+<meta name="msapplication-config" content="http://localhost:4000/images/browserconfig.xml?v=M44lzPylqQ">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="http://localhost:4000/assets/css/academicons.css"/>
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">Lutz Lu's Happy Blog</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/publications/">Publications</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Blog Posts</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/cv/">CV</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  <div class="author__avatar">
+    
+    	<img src="http://localhost:4000/images/photo.jpeg" class="author__avatar" alt="Lutz Lu">
+    
+  </div>
+
+  <div class="author__content">
+    <h3 class="author__name">Lutz Lu</h3>
+    <p class="author__bio">Graduate nerd at Dartmouth College</p>
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> Hanover, NH</li>
+      
+      
+      
+      
+        <li><a href="mailto:yunrui.lu.gr@dartmouth.edu"><i class="fas fa-fw fa-envelope" aria-hidden="true"></i> Email</a></li>
+      
+      
+       
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://github.com/LutzzLu"><i class="fab fa-fw fa-github" aria-hidden="true"></i> Github</a></li>
+      
+      
+      
+      
+      
+      
+      
+        <li><a href="https://steamcommunity.com/id/lutzzlu"><i class="fab fa-fw fa-steam-square" aria-hidden="true"></i> Steam</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Fine-tuning a Huggingface Model Using Own Data">
+    <meta itemprop="description" content="This is my first blog about how to use huggingface models.">
+    <meta itemprop="datePublished" content="February 20, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Fine-tuning a Huggingface Model Using Own Data
+</h1>
+          
+        
+        
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Published:</strong> <time datetime="2022-02-20T00:00:00-08:00">February 20, 2022</time></p>
+        
+        
+             
+        
+    
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>This is my first blog about how to use huggingface models.</p>
+
+<h3 id="first-of-all-import-all-the-packages">First of all, import all the packages</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">DataCollatorWithPadding</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForSequenceClassification</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">TrainingArguments</span><span class="p">,</span> <span class="n">Trainer</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">import</span> <span class="nn">datasets</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_metric</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<h3 id="because-of-data-privacy-using-imda-as-an-example">Because of data privacy, using imda as an example</h3>
+
+<p>There are many other ways to load dataset. You can also use pickle to read pkl file.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'dataset.pkl'</span><span class="p">,</span><span class="s">'rb'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>If you get an error like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Can't get attribute 'new_block' on &lt;module 'pandas.core.internals.blocks' from '/dartfs-hpc/rc/home/y/f005dcy/.conda/envs/jupyter/lib/python3.7/site-packages/pandas/core/internals/blocks.py'&gt;
+</code></pre></div></div>
+
+<p>Then you can try to upgrade your pandas at first.</p>
+
+<p>Use:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade pandas
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">imdb</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s">"imdb"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reusing dataset imdb (/dartfs-hpc/rc/home/y/f005dcy/.cache/huggingface/datasets/imdb/plain_text/1.0.0/2fdd8b9bcadd6e7055e742a706876ba43f19faee861df134affd7a3f60fc38a1)
+
+
+
+  0%|          | 0/3 [00:00&lt;?, ?it/s]
+</code></pre></div></div>
+
+<h3 id="transform-dataset-to-pandas-dataframe-and-then-transform-back">Transform dataset to pandas dataframe, and then transform back</h3>
+
+<p>We can transfrom the contents of this dataset to dataframes. And then use</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">df_imdb_train</span><span class="p">)</span>
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">df_imdb_test</span><span class="p">)</span>
+</code></pre></div></div>
+<p>to transform them back to dataset format.</p>
+
+<p>Notice: sometime you might need remove the index column, otherwise there will be one extra column which is the index.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_dataset</span><span class="p">.</span><span class="n">remove_columns_</span><span class="p">(</span><span class="s">'__index_level_0__'</span><span class="p">)</span>
+<span class="n">test_dataset</span><span class="p">.</span><span class="n">remove_columns_</span><span class="p">(</span><span class="s">'__index_level_0__'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then we can use</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">imdb</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">DatasetDict</span><span class="p">({</span><span class="s">"train"</span><span class="p">:</span><span class="n">train_dataset</span><span class="p">,</span><span class="s">"test"</span><span class="p">:</span><span class="n">test_dataset</span><span class="p">})</span>
+</code></pre></div></div>
+<p>to put them back together</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_imdb_train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">imdb</span><span class="p">[</span><span class="s">'train'</span><span class="p">])</span>
+<span class="n">df_imdb_test</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">imdb</span><span class="p">[</span><span class="s">'test'</span><span class="p">])</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">df_imdb_train</span><span class="p">)</span>
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">df_imdb_test</span><span class="p">)</span>
+<span class="c1"># train_dataset.remove_columns_('__index_level_0__')
+# test_dataset.remove_columns_('__index_level_0__')
+</span><span class="n">imdb</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">DatasetDict</span><span class="p">({</span><span class="s">"train"</span><span class="p">:</span><span class="n">train_dataset</span><span class="p">,</span><span class="s">"test"</span><span class="p">:</span><span class="n">test_dataset</span><span class="p">})</span>
+</code></pre></div></div>
+
+<h3 id="save-the-dataset-local">Save the dataset local</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">imdb</span><span class="p">.</span><span class="n">save_to_disk</span><span class="p">(</span><span class="s">"dataset_from_pd"</span><span class="p">)</span>
+<span class="n">imdb</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">load_from_disk</span><span class="p">(</span><span class="s">"dataset_from_pd"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="run-an-example-model">Run an example model</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"distilbert-base-uncased"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">preprocess_function</span><span class="p">(</span><span class="n">examples</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">examples</span><span class="p">[</span><span class="s">"text"</span><span class="p">],</span> <span class="n">truncation</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenized_imdb</span> <span class="o">=</span> <span class="n">imdb</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">preprocess_function</span><span class="p">,</span> <span class="n">batched</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  0%|          | 0/25 [00:00&lt;?, ?ba/s]
+
+
+
+  0%|          | 0/25 [00:00&lt;?, ?ba/s]
+</code></pre></div></div>
+
+<h3 id="we-can-see-there-are-two-more-columns-which-are-input_ids-and-attention_mask">We can see there are two more columns, which are ‘input_ids’ and ‘attention_mask’</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenized_imdb</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DatasetDict({
+    train: Dataset({
+        features: ['text', 'label', 'input_ids', 'attention_mask'],
+        num_rows: 25000
+    })
+    test: Dataset({
+        features: ['text', 'label', 'input_ids', 'attention_mask'],
+        num_rows: 25000
+    })
+})
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data_collator</span> <span class="o">=</span> <span class="n">DataCollatorWithPadding</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSequenceClassification</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"distilbert-base-uncased"</span><span class="p">,</span> <span class="n">num_labels</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Some weights of the model checkpoint at distilbert-base-uncased were not used when initializing DistilBertForSequenceClassification: ['vocab_transform.bias', 'vocab_layer_norm.bias', 'vocab_projector.bias', 'vocab_transform.weight', 'vocab_layer_norm.weight', 'vocab_projector.weight']
+- This IS expected if you are initializing DistilBertForSequenceClassification from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing DistilBertForSequenceClassification from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.weight', 'pre_classifier.weight', 'classifier.bias', 'pre_classifier.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">training_args</span> <span class="o">=</span> <span class="n">TrainingArguments</span><span class="p">(</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s">"./results"</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">2e-5</span><span class="p">,</span>
+    <span class="n">per_device_train_batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">per_device_eval_batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">num_train_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">tokenized_imdb</span><span class="p">[</span><span class="s">"train"</span><span class="p">],</span>
+    <span class="n">eval_dataset</span><span class="o">=</span><span class="n">tokenized_imdb</span><span class="p">[</span><span class="s">"test"</span><span class="p">],</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">,</span>
+    <span class="n">data_collator</span><span class="o">=</span><span class="n">data_collator</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">trainer</span><span class="p">.</span><span class="n">train</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PyTorch: setting up devices
+The default value for the training argument `--report_to` will change in v5 (from all installed integrations to none). In v5, you will need to use `--report_to all` to get the same behavior as now. You should start updating your code and make this info disappear :-).
+The following columns in the training set  don't have a corresponding argument in `DistilBertForSequenceClassification.forward` and have been ignored: text.
+/dartfs-hpc/rc/home/y/f005dcy/.conda/envs/jupyter/lib/python3.7/site-packages/transformers/optimization.py:309: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use thePyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  FutureWarning,
+***** Running training *****
+  Num examples = 25000
+  Num Epochs = 5
+  Instantaneous batch size per device = 16
+  Total train batch size (w. parallel, distributed &amp; accumulation) = 16
+  Gradient Accumulation steps = 1
+  Total optimization steps = 7815
+</code></pre></div></div>
+
+<p>Here, if you get an error like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Unable to create tensor, you should probably activate truncation and/or padding with 'padding=True' 'truncation=True' to have batched tensors with the same length.
+</code></pre></div></div>
+
+<p>One possible reason might be, your lables is not standard. This means your lable might be string or other format.</p>
+
+<p>You can try this first.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span><span class="p">[</span><span class="s">'train'</span><span class="p">][</span><span class="s">'label'</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s">'train'</span><span class="p">][</span><span class="s">'label'</span><span class="p">].</span><span class="n">replace</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s">'train'</span><span class="p">][</span><span class="s">'label'</span><span class="p">])),</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s">'train'</span><span class="p">][</span><span class="s">'label'</span><span class="p">]))))))</span> 
+</code></pre></div></div>
+
+<h3 id="and-we-can-test-the-accuracy">And we can test the accuracy</h3>
+
+<p>First use this to load your model</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSequenceClassification</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"./results/checkpoint-7500/"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">metric</span> <span class="o">=</span> <span class="n">load_metric</span><span class="p">(</span><span class="s">"accuracy"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">compute_metrics</span><span class="p">(</span><span class="n">eval_pred</span><span class="p">):</span>
+    <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">eval_pred</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">metric</span><span class="p">.</span><span class="n">compute</span><span class="p">(</span><span class="n">predictions</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span> <span class="n">references</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="n">training_args</span><span class="p">,</span>
+    <span class="n">train_dataset</span><span class="o">=</span><span class="n">tokenized_imdb</span><span class="p">[</span><span class="s">"train"</span><span class="p">],</span>
+    <span class="n">eval_dataset</span><span class="o">=</span><span class="n">tokenized_imdb</span><span class="p">[</span><span class="s">"test"</span><span class="p">],</span>
+    <span class="n">compute_metrics</span><span class="o">=</span><span class="n">compute_metrics</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">trainer</span><span class="p">.</span><span class="n">evaluate</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The following columns in the evaluation set  don't have a corresponding argument in `DistilBertForSequenceClassification.forward` and have been ignored: text.
+***** Running Evaluation *****
+  Num examples = 25000
+  Batch size = 16
+</code></pre></div></div>
+
+<div>
+
+  <progress value="1563" max="1563" style="width:300px; height:20px; vertical-align: middle;"></progress>
+  [1563/1563 02:25]
+</div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'eval_loss': 0.3616120219230652,
+ 'eval_accuracy': 0.9326,
+ 'eval_runtime': 145.9329,
+ 'eval_samples_per_second': 171.312,
+ 'eval_steps_per_second': 10.71}
+</code></pre></div></div>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        
+        
+
+<div class="page__footer-copyright">&copy; 2022 Lutz Lu (Yunrui Lu). Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+  </body>
+</html>
+

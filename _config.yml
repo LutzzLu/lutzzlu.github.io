@@ -85,9 +85,8 @@ author:
   bio              : "Graduate nerd at Dartmouth College"
   location         : "Hanover, NH"
   employer         :
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
-  googlescholar    : "http://yourfullgooglescholarurl.com"
-  email            :
+  googlescholar    : 
+  email            : 'yunrui.lu.gr@dartmouth.edu'
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
@@ -99,21 +98,21 @@ author:
   github           : "LutzzLu"
   google_plus      :
   keybase          :
-  instagram        :
+  instagram        : 
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
   linkedin         :
-  orcid            : "http://orcid.org/yourorcidurl"
+  orcid            : 
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
-  steam            :
+  steam            : 'lutzzlu'
   tumblr           :
-  twitter          : "replacethistwitterhandle"
+  twitter          : 
   vine             :
   weibo            :
   xing             :
-  youtube          :
+  youtube          : 
   wikipedia        :
 
 
@@ -198,10 +197,10 @@ defaults:
     values:
       layout: single
       author_profile: true
-      read_time: true
+      read_time: false
       comments: true
-      share: true
-      related: true
+      share: false
+      related: false
   # _pages
   - scope:
       path: ""
@@ -225,7 +224,7 @@ defaults:
     values:
       layout: single
       author_profile: true
-      share: true
+      share: false
       comments: true
   # _portfolio
   - scope:
