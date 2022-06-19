@@ -2,23 +2,15 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://localhost:4000/portfolio/portfolio-1/</loc>
-<lastmod>2022-06-19T13:02:56-07:00</lastmod>
+<lastmod>2022-06-19T16:38:34-07:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/portfolio/portfolio-2/</loc>
-<lastmod>2022-06-19T13:02:56-07:00</lastmod>
+<lastmod>2022-06-19T16:38:34-07:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/posts/2022/02/blog-post-1/</loc>
 <lastmod>2022-02-20T00:00:00-08:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/publication/2009-10-01-paper-title-number-1</loc>
-<lastmod>2009-10-01T00:00:00-07:00</lastmod>
-</url>
-<url>
-<loc>http://localhost:4000/publication/2010-10-01-paper-title-number-2</loc>
-<lastmod>2010-10-01T00:00:00-07:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/publication/2015-10-01-paper-title-number-3</loc>
@@ -104,6 +96,10 @@
 </url>
 <url>
 <loc>http://localhost:4000/markdown_generator/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/files/AryaKadakiaThesis.pdf</loc>
+<lastmod>2022-06-08T12:13:16-07:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/files/paper1.pdf</loc>
